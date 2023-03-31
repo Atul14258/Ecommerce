@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+<head>
+
+
+	<!-- Meta Tag -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name='copyright' content=''>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Title Tag  -->
+    <title>Sweet Heaven</title>
+	<!-- Favicon -->
+
+	<link rel="icon" type="image/png" href="{% static '/images/logo4.png' %}">
+	<!-- Web Font -->
+	<link href="{% static 'https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap' %}" rel="stylesheet">
+
+	<!-- StyleSheet -->
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+	<!-- Magnific Popup -->
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.min.css' %}">
+	<!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+	<!-- Fancybox -->
+	<link rel="stylesheet" href="{% static 'css/jquery.fancybox.min.css' %}">
+	<!-- Themify Icons -->
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}">
+	<!-- Nice Select CSS -->
+    <link rel="stylesheet" href="{% static 'css/niceselect.css' %}">
+	<!-- Animate CSS -->
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- Flex Slider CSS -->
+    <link rel="stylesheet" href="{% static 'css/flex-slider.min.css' %}">
+	<!-- Owl Carousel -->
+    <link rel="stylesheet" href="{% static 'css/owl-carousel.css' %}">
+	<!-- Slicknav -->
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}">
+
+	<!-- Eshop StyleSheet -->
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+
+
+</head>
+<body class="js">
+
+	<!-- Preloader -->
+	<div class="preloader">
+		<div class="preloader-inner">
+			<div class="preloader-icon">
+				<span></span>
+				<span></span>
+			</div>
+		</div>
+	</div>
+	<!-- End Preloader -->
+
+<header class="header shop">
+			<!-- Topbar -->
+			<div class="topbar">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-4 col-md-12 col-12">
+							<!-- Top Left -->
+							<div class="top-left">
+								<ul class="list-main">
+									<li><i class="ti-headphone-alt"></i> +91 1234567890</li>
+									<li><i class="ti-email"></i> support.admin@gmail.com</li>
+								</ul>
+							</div>
+							<!--/ End Top Left -->
+						</div>
+						<div class="col-lg-8 col-md-12 col-12">
+							<!-- Top Right -->
+						<div class="right-content">
+							<ul class="list-main">
+								{% if user.is_authenticated %}
+								<li><i class=""></i> <a href="#">Welcome {{user.username}}</a></li>
+								<li><i class="ti-power-off"></i><a href="{% url 'user_logout' %}">Logout</a></li>
+								{% else %}
+								<li><i class="ti-power-off"></i><a href="{% url 'user_login' %}">Login</a></li>
+								<li><i class="ti-power-off"></i><a href="{% url 'user_register' %}">Register</a></li>
+	                            {% endif %}
+							</ul>
+						</div>
+						<!-- End Top Right -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Topbar -->
+			<div class="middle-inner">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-2 col-md-2 col-12">
+							<!-- Logo -->
+							<div class="logo">
+								<a href="index.html"><img src="{% static '/images/logo3.png' %}" alt="logo"></a>
+							</div>
+							<!--/ End Logo -->
+							<!--/ End Search Form -->
+							<div class="mobile-nav"></div>
+						</div>
+						<div class="col-lg-8 col-md-7 col-12">
+							<div class="search-bar-top">
+								<div class="search-bar">
+									<form action="/search/" method="get">
+										<input placeholder="Search Products Here....." type="text" name="query" id="query">
+										<button class="btnn"><i class="ti-search"></i></button>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-3 col-12">
+							<div class="right-bar">
+								<!-- Search Form -->
+
+								<div class="sinlge-bar shopping">
+									<a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{request.session.cart|length}}</span></a>
+									<!-- Shopping Item -->
+									{% load cart_tag %}
+									<div class="shopping-item">
+										<div class="dropdown-cart-header">
+											<span>{{request.session.cart|length}} Items</span>
+										</div>
+										<ul class="shopping-list">
+                                        {% for key,value in request.session.cart.items %}
+											<li>
+												<a href="{% url 'item_clear' key %}"  class="remove" title="Remove this item"><i class="fa fa-remove" ></i></a>
+												<a class="cart-img" ><img src="{{value.image}}" alt="#"></a>
+												<h4><a href="#">{{value.name}}</a></h4>
+												<p class="quantity">{{value.quantity}}   <span class="amount">₹ {{value.price}}</span></p>
+											</li>
+                                        {% endfor %}
+										</ul>
+										<div class="bottom">
+											<div class="total">
+												<span>Total</span>
+												<span class="total-amount">₹ {{cart_total_amount}}</span>
+											</div>
+											<a href="{% url 'cart_detail' %}" class="btn animate">View Cart</a>
+											<a href="{% url 'checkout' %}" class="btn animate">Checkout</a>
+										</div>
+									</div>
+									<!--/ End Shopping Item -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	<marquee>Sweet are only fresh till 24 Hours</marquee>
+			<!-- Header Inner -->
+			<div class="header-inner">
+				<div class="container">
+					<div class="cat-nav-head">
+						<div class="row">
+							<div class="col-12">
+								<div class="menu-area">
+									<!-- Main Menu -->
+									<nav class="navbar navbar-expand-lg">
+										<div class="navbar-collapse">
+											<div class="nav-inner">
+												<ul class="nav main-menu menu navbar-nav">
+													<li class="active"><a href="{% url 'index' %}">Home</a></li>
+													<li class="#"><a href="{% url 'product' %}">Product</a></li>
+													<li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
+														<ul class="dropdown">
+															<li><a href="{% url 'cart_detail' %}">Cart</a></li>
+															<li><a href="{% url 'checkout' %}">Checkout</a></li>
+														</ul>
+													</li>
+													<li><a href="{% url 'contact' %}">Contact Us</a></li>
+												</ul>
+											</div>
+										</div>
+									</nav>
+									<!--/ End Main Menu -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ End Header Inner -->
+</header>
+
+	<!-- Start Small Banner  -->
+	<section class="small-banner section">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Single Banner  -->
+				<div class="col-lg-4 col-md-6 col-12">
+					<div class="single-banner">
+						<img src="{% static '/images/mysore-pak-1.png' %}">
+						<div class="content">
+							<p>Milk Collectons</p>
+							<h3> Festivals season <br> collection</h3>
+							<a href="{% url 'product' %}">Shop Now</a>
+						</div>
+					</div>
+				</div>
+				<!-- /End Single Banner  -->
+				<!-- Single Banner  -->
+				<div class="col-lg-4 col-md-6 col-12">
+					<div class="single-banner">
+						<img src="{% static '/images/thinai-adhirasam.png' %}" alt="#">
+						<div class="content">
+							<p>Traditionals Collecton</p>
+							<h3>Festivals season <br> 2022</h3>
+							<a href="{% url 'product' %}">Shop Now</a>
+						</div>
+					</div>
+				</div>
+				<!-- /End Single Banner  -->
+				<!-- Single Banner  -->
+				<div class="col-lg-4 col-12">
+					<div class="single-banner tab-height">
+						<img src="{% static '/images/moong-dal-halwa.png' %}" alt="#">
+						<div class="content">
+							<p>Halwa Collectons</p>
+							<h3>Festivals season <br> Up to <span>15%</span> Off</h3>
+							<a href="{% url 'product' %}">Shop Now</a>
+						</div>
+					</div>
+				</div>
+				<!-- /End Single Banner  -->
+			</div>
+		</div>
+	</section>
+	<!-- End Small Banner -->
+<br>
+	<!-- Start Midium Banner  -->
+	<section class="midium-banner">
+		<div class="container">
+			<div class="row">
+				<!-- Single Banner  -->
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="single-banner">
+						<img src="{% static '/images/images.png' %}" alt="#">
+						<div class="content">
+							<p>Dry fruit Collectons</p>
+							<h3>Festivals season <br>Up to<span> 10%</span></h3>
+							<a href="{% url 'product' %}">Shop Now</a>
+						</div>
+					</div>
+				</div>
+				<!-- /End Single Banner  -->
+				<!-- Single Banner  -->
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="single-banner">
+						<img src="{% static '/images/images (4)_2.png' %}" alt="#">
+						<div class="content">
+							<p>Ghee Collections</p>
+							<h3>Festivals season <br> up to <span>15%</span></h3>
+							<a href="{% url 'product' %}" class="btn">Shop Now</a>
+						</div>
+					</div>
+				</div>
+				<!-- /End Single Banner  -->
+			</div>
+		</div>
+	</section>
+	<!-- End Midium Banner -->
+
+	<!-- Start Most Popular -->
+	<div class="product-area most-popular section">
+        <div class="container">
+            <div class="row">
+				<div class="col-12">
+					<div class="section-title">
+						<h2>All Products</h2>
+					</div>
+				</div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+
+                    <div class="owl-carousel popular-slider">
+						{% for product in products %}
+						<!-- Start Single Product -->
+						<div class="single-product">
+							<div class="product-img">
+								<a href="product-details.html">
+									<img class="default-img" src="{{product.image.url}}" alt="#">
+									<img class="hover-img" src="{{product.image.url}}" alt="#">
+									<span class="out-of-stock">Hot</span>
+								</a>
+								<div class="button-head">
+									<div class="product-action">
+										<a data-toggle="modal" data-target="#exampleModal-{{forloop.counter}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+
+									</div>
+									<div class="product-action-2">
+										<a title="Add to cart" href="{% url 'cart_add' product.id %}">Add to cart</a>
+									</div>
+								</div>
+							</div>
+							<div class="product-content">
+								        <h2><a href="product-details.html">{{product.name}}</a></h2>
+										<h3><a href="product-details.html">{{product.category.category_name}}</a></h3>
+										<div class="product-price">
+											<span>₹ {{product.price}}</span>
+										</div>
+							</div>
+						</div>
+						<!-- End Single Product -->
+						{% endfor %}
+					</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+	<!-- End Most Popular Area -->
+
+
+
+	<!-- Start Cowndown Area -->
+	<section class="cown-down">
+		<div class="section-inner ">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-6 col-12 padding-right">
+						<div class="image">
+							<img src="{% static '/images/dryfruitsweet1.png' %}" alt="#">
+						</div>
+					</div>
+					<div class="col-lg-6 col-12 padding-left">
+						<div class="content">
+							<div class="heading-block">
+								<p class="small-title">Deal of day</p>
+								<h3 class="title">Kaju Katli</h3>
+								<p class="text">Sweet made up of dryfruit!</p>
+								<h1 class="price">₹ 1200 <s>₹ 1890</s></h1>
+								<div class="coming-time">
+									<div class="clearfix" data-countdown="2021/02/30"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- /End Cowndown Area -->
+
+
+	<!-- Modal -->
+	{% for product in products %}
+    <div class="modal fade" id="exampleModal-{{forloop.counter}}" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row no-gutters">
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                <!-- Product Slider -->
+									<div class="product-gallery">
+										<div class="quickview-slider-active">
+											<div class="single-slider">
+												<img src="{{product.image.url}}" alt="#">
+											</div>
+
+										</div>
+									</div>
+								<!-- End Product slider -->
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                                <div class="quickview-content">
+                                    <h2>{{product.name}}</h2>
+                                    <div class="quickview-ratting-review">
+
+                                        <div class="quickview-stock">
+                                            <span><i class="fa fa-check-circle-o"></i> in stock</span>
+                                        </div>
+                                    </div>
+                                    <h3>₹ {{product.price}}</h3>
+                                    <div class="quickview-peragraph">
+                                        <p>{{product.desc}}</p>
+                                    </div>
+
+                                    <div class="quantity">
+										<!-- Input Order -->
+										<div class="input-group">
+											<div class="button minus">
+												<button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[0.5]">
+													<i class="ti-minus"></i>
+												</button>
+											</div>
+											<input type="text" name="quant[0.5]" class="input-number"  data-min="0.5" data-max="1000" value="0.5">
+											<div class="button plus">
+												<button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[0.5]">
+													<i class="ti-plus"></i>
+												</button>
+											</div>
+										</div>
+										<!--/ End Input Order -->
+									</div>
+									<div class="add-to-cart">
+										<a href="#" class="btn">Add to cart</a>
+
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+	{% endfor %}
+    <!-- Modal end -->
+
+	<!-- Start Footer Area -->
+	<footer class="footer">
+		<!-- Footer Top -->
+		<div class="footer-top section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer about">
+							<div class="logo">
+								<a href="index.html"><img src="{% static '/images/logo3.png' %}" alt="#"></a>
+							</div>
+							<p class="text">Brought to you by the team behind Your Favourite Adda, The Sweet Heaven and Your Happy Place, Sweet Heaven is a celebration of sweets that have moulded our happiest occasions.</p>
+							<p class="call">Got Question? Call us 24/7<span><a href="tel:1234567890">+91 1234567890</a></span></p>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Information</h4>
+							<ul>
+
+								<li><a href="{% url 'contact' %}">Contact Us</a></li>
+
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-2 col-md-6 col-12">
+
+						<!-- Single Widget -->
+						<div class="single-footer social">
+							<h4>Get In Touch</h4>
+							<!-- Single Widget -->
+							<div class="contact">
+								<ul>
+									<li>Sector 4,Vikas Nagar</li>
+									<li>Koparkhairane</li>
+									<li>Navi Mumbai</li>
+									<li>Maharashtra 400709</li>
+									<li>admin@gmail.com</li>
+									<li>+91 1234567890</li>
+								</ul>
+							</div>
+							<!-- End Single Widget -->
+
+						</div>
+						<!-- End Single Widget -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Footer Top -->
+
+	</footer>
+	<!-- /End Footer Area -->
+
+
+	<!-- Jquery -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.0.js' %}"></script>
+	<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+	<!-- Popper JS -->
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<!-- Bootstrap JS -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- Color JS -->
+	<script src="{% static 'js/colors.js' %}"></script>
+	<!-- Slicknav JS -->
+	<script src="{% static 'js/slicknav.min.js' %}"></script>
+	<!-- Owl Carousel JS -->
+	<script src="{% static 'js/owl-carousel.js' %}"></script>
+	<!-- Magnific Popup JS -->
+	<script src="{% static 'js/magnific-popup.js' %}"></script>
+	<!-- Waypoints JS -->
+	<script src="{% static 'js/waypoints.min.js' %}"></script>
+	<!-- Countdown JS -->
+	<script src="{% static 'js/finalcountdown.min.js' %}"></script>
+	<!-- Nice Select JS -->
+	<script src="{% static 'js/nicesellect.js' %}"></script>
+	<!-- Flex Slider JS -->
+	<script src="{% static 'js/flex-slider.js' %}"></script>
+	<!-- ScrollUp JS -->
+	<script src="{% static 'js/scrollup.js' %}"></script>
+	<!-- Onepage Nav JS -->
+	<script src="{% static 'js/onepage-nav.min.js' %}"></script>
+	<!-- Easing JS -->
+	<script src="{% static 'js/easing.js' %}"></script>
+	<!-- Active JS -->
+	<script src="{% static 'js/active.js' %}"></script>
+
+</body>
+</html>
